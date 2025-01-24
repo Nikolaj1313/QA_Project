@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вопросы по теории тестирования</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .options button {
+            margin-right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Вопросы по теории тестирования</h1>
+        <div id="quiz">
+            <p>Готовы к проверке знаний?</p>
+            <div class="options">
+                <button onclick="startQuiz()">Да</button>
+                <button onclick="endQuiz()">Нет</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const вопросы = [
+            "- Что такое QA?;",
+            "- Что такое QC?;",
+            "- Что такое Баг?;",
+            "- Какие бывают виды ошибок?;",
+            "- Назовите уровни тестирования;",
+            "- Назовите виды тестирования;",
+            "- Что такое Валидация;",
+            "- Что такое Верификация?;",
+            "- Назовите этапы SDLC?;",
+            "- Назовите этапы STLC?;",
+            "- Назовите цели тестирования;",
+            "- Назовите принципы тестирования;",
+            "- Назовите стадии тестирования;",
+            "- Какие бывают технологии тестирования?;",
+            "- Чем отличается QAE от тестирования?;",
+            "- Что такое SCRUM?;",
+            "- Что такое Тестирование ПО?;",
+            "- Причины возникновения дефектов?;",
+            "- На какие вопросы должен отвечать хороший тест-план?;",
+            "- Что такое E2E тестирование?;",
+            "- Особенности тестирования ВЕБ;",
+            "- Особенности тестирования МОБИЛОК;",
+            "- Назовите виды тестирования по целям;",
+            "- Назовите фазы тестирования;",
+            "- Назовите тестовые артефакты;",
+            "- Назавите атрибуты баг-репорта;",
+            "- Назавите атрибуты тест-кейса;",
+            "- Что такое тест-план?;",
+            "- Что такое чек-лист?;",
+            "- Жизненный цикл бага;",
+            "- Спецификация SRS. Структура;",
+            "- Назовите техники тест-дизайна;",
+            "- Назовите функциональные виды тестирования;",
+            "- Назовите нефункциональные виды тестирования;",
+            "- Расскажите про тестирование связанное с изменениями;",
+            "- Чем отличается регрессионое тестирование от санити тестов?;"
+        ];
+
+        let использованные_вопросы = new Set();
+
+        function startQuiz() {
+            document.getElementById('quiz').innerHTML = '';
+            nextQuestion();
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz').innerHTML = '<p>Досвидули!</p>';
+        }
+
+        function nextQuestion() {
+            if (использованные_вопросы.size >= вопросы.length) {
+                document.getElementById('quiz').innerHTML = '<p>Кабзда вопросам, закончились!</p>';
+                return;
+            }
+
+            let доступные_вопросы = вопросы.filter(q => !использованные_вопросы.has(q));
+            let выбранные_вопросы = [];
+
+            for (let i = 0; i < 3 && i < доступные_вопросы.length; i++) {
+                let случайный_вопрос = доступные_вопросы[Math.floor(Math.random() * доступные_вопросы.length)];
+                выбранные_вопросы.push(случайный_вопрос);
+                использованные_вопросы.add(случайный_вопрос);
+            }
+
+            let quizHTML = '';
+            выбранные_вопросы.forEach(вопрос => {
+                quizHTML += `<div class="question"><p>${вопрос}</p></div>`;
+            });
+
+            quizHTML += `
+                <p>Продолжить?</p>
+                <div class="options">
+                    <button onclick="nextQuestion()">Да</button>
+                    <button onclick="endQuiz()">Нет</button>
+                </div>
+            `;
+
+            document.getElementById('quiz').innerHTML = quizHTML;
+        }
+    </script>
+</body>
+</html>
